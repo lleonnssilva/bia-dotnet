@@ -16,27 +16,28 @@
 ## Rodar local
 Rodar Local 
 - comentar os valores na string de  conexão no projeto
-``` //"ConnectionStrings": {
-``` // "DefaultConnection": "User ID=postgres;Password=postgres;Server=localhost;Port=5433;Database=bia; Pooling=true;"
-```//}
+- //"ConnectionStrings": {
+ // "DefaultConnection": "User ID=postgres;Password=postgres;Server=localhost;Port=5433;Database=bia; Pooling=true;"
+//}
 - Setar a variável stringConnection no docker-compose.yml
 - environment:
-```      ConnectionStrings__DefaultConnection: User ID=postgres;Password=postgres;Server=database;Port=5432;Database=bia; Pooling=true;
+      ConnectionStrings__DefaultConnection: User ID=postgres;Password=postgres;Server=database;Port=5432;Database=bia; Pooling=true;
 - Comandos
-``` docker compose up -d
-``` http://localhost:3001/
+- docker compose up -d
+- http://localhost:3001/
 
 ## Formas de aplicar Migrations
+Migrations
 # 1.1 Migrations em máquina Local:
 - Descomenta ConnectionStrings e setar os valores da string de  conexão no projeto para executar o migrations Localhost
-``` "ConnectionStrings": {
-```    "DefaultConnection": "User ID=postgres;Password=postgres;Server=localhost;Port=5433;Database=bia; Pooling=true;"
-```  }
+- "ConnectionStrings": {
+    "DefaultConnection": "User ID=postgres;Password=postgres;Server=localhost;Port=5433;Database=bia; Pooling=true;"
+  }
 
 executar comandos  
-``` dotnet tool update --global dotnet-ef
-``` dotnet ef migrations add InitialCreate
-``` dotnet ef database update
+- #dotnet tool update --global dotnet-ef
+- dotnet ef migrations add InitialCreate
+- dotnet ef database update
 
 acesso pelo Dbever
 host:localhost:5433/bia/user:postgres/password:postgres
@@ -45,15 +46,15 @@ host:localhost:5433/bia/user:postgres/password:postgres
 - Criar um bastion ec2 com  SG dev-bastion-host com permissão ssh
 - Adicionar permissão no SG dev-bd com permissão PostgreSQL do SG dev-bastion-host
 - Descomenta ConnectionStrings e setar os valores da string de  conexão no projeto para executar o migrations no RDS
-``` "ConnectionStrings": {
-```    "DefaultConnection": "User ID=postgres;Password=senha_rds;Server=localhost;Port=5434;Database=bia; Pooling=true;"
-```  }
-``` ssh -f -N -i "suachave.pem" -L 5434:host_rds:5432 ec2bastion
+- "ConnectionStrings": {
+    "DefaultConnection": "User ID=postgres;Password=senha_rds;Server=localhost;Port=5434;Database=bia; Pooling=true;"
+  }
+- ssh -f -N -i "suachave.pem" -L 5434:host_rds:5432 ec2bastion
 
 - executar comandos  pós abrir conexão
-``` #dotnet tool update --global dotnet-ef
-``` dotnet ef migrations add InitialCreate
-``` dotnet ef database update
+- #dotnet tool update --global dotnet-ef
+- dotnet ef migrations add InitialCreate
+- dotnet ef database update
 
 - acesso pelo Dbever
  host:localhost:5434/bia/user:postgres/password:senha_rds
@@ -62,14 +63,14 @@ host:localhost:5433/bia/user:postgres/password:postgres
 # 1.3 Migrations máquina local e RDS acesso publico (não recomendado)
 - Adicionar permissão no SG dev-bd  para  porta PostgresSQL para ip da sua máquina
 - Descomenta ConnectionStrings e setar os valores da string de  conexão no projeto para executar o migrations no RDS
-``` "ConnectionStrings": {
-```    "DefaultConnection": "User ID=postgres;Password=senha_rds;Server=host_rds;Port=5432;Database=bia; Pooling=true;"
-```  }
+- "ConnectionStrings": {
+    "DefaultConnection": "User ID=postgres;Password=senha_rds;Server=host_rds;Port=5432;Database=bia; Pooling=true;"
+  }
 
 - executar comandos  após abrir conexão
-``` #dotnet tool update --global dotnet-ef
-``` dotnet ef migrations add InitialCreate
-``` dotnet ef database update
+- #dotnet tool update --global dotnet-ef
+- dotnet ef migrations add InitialCreate
+- dotnet ef database update
 
 - acesso pelo Dbever
  host:host_rds/user:postgres/password:senha_rds
@@ -80,21 +81,21 @@ host:localhost:5433/bia/user:postgres/password:postgres
 
 # 1.4 Máquina Local docker via comando psql
 - executar container postgres na base bia
-``` docker exec -it ad495bdcfa70 psql -U postgres -d bia
+- docker exec -it ad495bdcfa70 psql -U postgres -d bia
 
-``` listar tabelas
-``` \dt
+- listar tabelas
+- \dt
 
 - criar tabela Tarefas
-``` CREATE TABLE public."Tarefas" (
-```	"uuid" uuid NOT NULL,
-```	dia_atividade text NOT NULL,
-```	titulo text NOT NULL,
-```	importante bool NOT NULL,
-```	"createdAt" timestamptz NOT NULL,
-```	"updatedAt" timestamptz NOT NULL,
-```	CONSTRAINT "PK_Tarefas" PRIMARY KEY (uuid)
-```);
+- CREATE TABLE public."Tarefas" (
+	"uuid" uuid NOT NULL,
+	dia_atividade text NOT NULL,
+	titulo text NOT NULL,
+	importante bool NOT NULL,
+	"createdAt" timestamptz NOT NULL,
+	"updatedAt" timestamptz NOT NULL,
+	CONSTRAINT "PK_Tarefas" PRIMARY KEY (uuid)
+);
 
 - acesso pelo Dbever
 host:localhost:5433/bia/user:postgres/password:postgres
