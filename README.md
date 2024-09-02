@@ -13,7 +13,7 @@
 - Microsoft.EntityFrameworkCore.Design
 - Npgsql.EntityFrameworkCore.PostgreSQL
 
-## Rodar local
+### Rodar local
 Rodar Local 
 - comentar os valores na string de  conexão no projeto
 - //"ConnectionStrings": {
@@ -26,9 +26,9 @@ Rodar Local
 - docker compose up -d
 - http://localhost:3001/
 
-## Formas de aplicar Migrations
+### Formas de aplicar Migrations
 Migrations
-# 1.1 Migrations em máquina Local:
+### 1.1 Migrations em máquina Local:
 - Descomenta ConnectionStrings e setar os valores da string de  conexão no projeto para executar o migrations Localhost
 - "ConnectionStrings": {
     "DefaultConnection": "User ID=postgres;Password=postgres;Server=localhost;Port=5433;Database=bia; Pooling=true;"
@@ -42,7 +42,7 @@ executar comandos
 acesso pelo Dbever
 host:localhost:5433/bia/user:postgres/password:postgres
 
-# 1.2 Migrations RDS com Túnel Local e Bastion Host :
+### 1.2 Migrations RDS com Túnel Local e Bastion Host :
 - Criar um bastion ec2 com  SG dev-bastion-host com permissão ssh
 - Adicionar permissão no SG dev-bd com permissão PostgreSQL do SG dev-bastion-host
 - Descomenta ConnectionStrings e setar os valores da string de  conexão no projeto para executar o migrations no RDS
@@ -60,7 +60,7 @@ host:localhost:5433/bia/user:postgres/password:postgres
  host:localhost:5434/bia/user:postgres/password:senha_rds
 
 
-# 1.3 Migrations máquina local e RDS acesso publico (não recomendado)
+### 1.3 Migrations máquina local e RDS acesso publico (não recomendado)
 - Adicionar permissão no SG dev-bd  para  porta PostgresSQL para ip da sua máquina
 - Descomenta ConnectionStrings e setar os valores da string de  conexão no projeto para executar o migrations no RDS
 - "ConnectionStrings": {
@@ -75,11 +75,11 @@ host:localhost:5433/bia/user:postgres/password:postgres
 - acesso pelo Dbever
  host:host_rds/user:postgres/password:senha_rds
 
-# 1.4 Com SSM
-# 1.5 Com DMS
-# ....
+### 1.4 Com SSM
+### 1.5 Com DMS
+### ....
 
-# 1.4 Máquina Local docker via comando psql
+### 1.4 Máquina Local docker via comando psql
 - executar container postgres na base bia
 - docker exec -it ad495bdcfa70 psql -U postgres -d bia
 
