@@ -39,9 +39,9 @@ git clone https://github.com/lleonnssilva/bia-dotnet.git
 Iniciar o projeto com docker
 ```bash
 docker compose up -d
-http://localhost:3001/
 ```
-
+Acessar
+http://localhost:3001/
 
 ### Migrations
 
@@ -52,7 +52,7 @@ dotnet ef migrations add InitialCreate
 dotnet ef database update
 ```
 ### Mais detalhes de migrations no arquivo Migrate.txt
-- Máquina local X EF Migrations da solução
-- Máquina local com RDS AWS X EF Migrations da solução
+- Máquina local X EntityFramework Migrations da solução
+- Máquina local com RDS AWS X EntityFramework Migrations da solução
 - Máquina local com Docker X Command psql
-- RDS AWS com Bastion Host X migrations da solução
+- RDS AWS com Bastion Host X EntityFramework Migrations da solução
