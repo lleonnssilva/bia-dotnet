@@ -4,49 +4,106 @@
 
 [>> Página de Inscrição do evento](https://org.imersaoaws.com.br/github/readme)
 
-#### Adicionar as dependências ####
-.NET.Sdk 8.0
+### Bia Bootcamp Imersão AWS 
+Adaptada de Node/React para .Net
+
+#### Adicionar as dependências
+Usar .NET.Sdk 8.0
 Microsoft.EntityFrameworkCore
 Microsoft.EntityFrameworkCore.Design
 Npgsql.EntityFrameworkCore.PostgreSQL
 
-#### Para criar o container ####
-# Guia de Uso do Docker
+### Rodar local
+Rodar Local 
+-comentar os valores na string de  conexão no projeto
+ //"ConnectionStrings": {
+   // "DefaultConnection": "User ID=postgres;Password=postgres;Server=localhost;Port=5433;Database=bia; Pooling=true;"
+  //}
+-Setar a variável stringConnection no docker-compose.yml
+environment:
+      ConnectionStrings__DefaultConnection: User ID=postgres;Password=postgres;Server=database;Port=5432;Database=bia; Pooling=true;
+-Comandos
+docker compose up -d
+http://localhost:3001/
 
-Este guia fornece instruções sobre como construir e gerenciar imagens Docker usando o Docker CLI. Docker é uma plataforma que permite criar, implantar e executar aplicativos em contêineres.
+### Formas de aplicar Migrations
+-1 ---Migrations----
+1.1 Migrations em máquina Local:
+-Descomenta ConnectionStrings e setar os valores da string de  conexão no projeto para executar o migrations Localhost
+ "ConnectionStrings": {
+    "DefaultConnection": "User ID=postgres;Password=postgres;Server=localhost;Port=5433;Database=bia; Pooling=true;"
+  }
 
-## Pré-requisitos
+-executar comandos  
+#dotnet tool update --global dotnet-ef
+dotnet ef migrations add InitialCreate
+dotnet ef database update
 
-1. **Docker**: Certifique-se de que o Docker está instalado no seu sistema. Você pode baixar e instalar o Docker Desktop [aqui](https://www.docker.com/products/docker-desktop) para Windows e macOS, ou seguir as instruções de instalação para Linux [aqui](https://docs.docker.com/engine/install/).
+-acesso pelo Dbever
+host:localhost:5433/bia
+user:postgres
+password:postgres
 
-2. **Docker Compose** (opcional): Se o seu projeto usar `docker-compose`, você pode instalar o Docker Compose [aqui](https://docs.docker.com/compose/install/).
+1.2 Migrations RDS com Túnel Local e Bastion Host :
+-Criar um bastion ec2 com  SG dev-bastion-host com permissão ssh
+-Adicionar permissão no SG dev-bd com permissão PostgreSQL do SG dev-bastion-host
+-Descomenta ConnectionStrings e setar os valores da string de  conexão no projeto para executar o migrations no RDS
+ "ConnectionStrings": {
+    "DefaultConnection": "User ID=postgres;Password=senha_rds;Server=localhost;Port=5434;Database=bia; Pooling=true;"
+  }
+-ssh -f -N -i "suachave.pem" -L 5434:host_rds:5432 ec2bastion
 
-## Estrutura do Projeto
+-executar comandos  pós abrir conexão
+#dotnet tool update --global dotnet-ef
+dotnet ef migrations add InitialCreate
+dotnet ef database update
 
-Certifique-se de que seu projeto inclui um arquivo `Dockerfile`, que define como a imagem Docker deve ser construída. Exemplo básico de um `Dockerfile`:
+-acesso pelo Dbever
+host:localhost:5434/bia
+user:postgres
+password:senha_rds
 
 
+1.3 Migrations máquina local e RDS acesso publico (não recomendado)
+-Adicionar permissão no SG dev-bd  para  porta PostgresSQL para ip da sua máquina
+-Descomenta ConnectionStrings e setar os valores da string de  conexão no projeto para executar o migrations no RDS
+ "ConnectionStrings": {
+    "DefaultConnection": "User ID=postgres;Password=senha_rds;Server=host_rds;Port=5432;Database=bia; Pooling=true;"
+  }
 
-#### Para subir os serviços ####
-docker-compose up -d
+-executar comandos  após abrir conexão
+#dotnet tool update --global dotnet-ef
+dotnet ef migrations add InitialCreate
+dotnet ef database update
 
-#### Para rodar as migrations no container ####
+-acesso pelo Dbever
+host:host_rds
+user:postgres
+password:senha_rds
 
+1.4 Com SSM
+1.5 Com DMS
+....
 
-```
+-2 ----Máquina Local docker via comando psql----
+-executar container postgres na base bia
+docker exec -it ad495bdcfa70 psql -U postgres -d bia
 
-# Gerenciamento de Migrações com Entity Framework Core (EF Core)
+-listar tabelas
+\dt
 
-Este documento fornece uma visão geral sobre como utilizar as migrações do Entity Framework Core em um projeto .NET. As migrações são uma ferramenta essencial para gerenciar mudanças no esquema do banco de dados ao longo do ciclo de vida do desenvolvimento.
+-criar tabela Tarefas
+CREATE TABLE public."Tarefas" (
+	"uuid" uuid NOT NULL,
+	dia_atividade text NOT NULL,
+	titulo text NOT NULL,
+	importante bool NOT NULL,
+	"createdAt" timestamptz NOT NULL,
+	"updatedAt" timestamptz NOT NULL,
+	CONSTRAINT "PK_Tarefas" PRIMARY KEY (uuid)
+);
 
-## Pré-requisitos
-
-1. **.NET SDK**: Certifique-se de que o SDK do .NET está instalado. Você pode baixar a versão mais recente [aqui](https://dotnet.microsoft.com/download).
-
-2. **Entity Framework Core Tools**: As ferramentas EF Core devem estar instaladas. Para instalá-las globalmente, use o comando:
-   ```bash
-   dotnet tool install --global dotnet-ef
-
-3. Comandos
-dotnet ef migrations add InitialCreate --context MeuDbContext
-dotnet ef database update --context MeuDbContext
+acesso pelo Dbever
+host:localhost:5433/bia
+user:postgres
+password:postgres
