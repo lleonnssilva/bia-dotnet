@@ -10,14 +10,18 @@ namespace BIA.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IServiceApi _service;
-        public HomeController(ILogger<HomeController> logger, IServiceApi service)
+        private readonly IWebHostEnvironment _env;
+        public HomeController(ILogger<HomeController> logger, IServiceApi service, IWebHostEnvironment env)
         {
             _logger = logger;
             _service = service;
+            _env = env;
+
         }
 
         public IActionResult Index()
         {
+            ViewBag.Ambiente = _env.EnvironmentName;
             return View();
         }
 
