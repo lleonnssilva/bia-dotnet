@@ -33,20 +33,7 @@ sudo yum install -y nodejs
 
 # Instalar o .NET SDK 8
 sudo yum install -y dotnet-sdk-8.0
+dotnet tool install --global dotnet-ef
 
-# Verificar a instalação
-dotnet --version
 
-# Realizar outras configurações, se necessário
-# Por exemplo, criar um diretório para aplicações .NET
-mkdir -p /home/ec2-user/dotnet-apps
 
-# (Opcional) Clonar um repositório de exemplo, se necessário
-# git clone https://github.com/your/repository.git /home/ec2-user/dotnet-apps/repository
-
-# Configurar permissões, se necessário
-# sudo chown -R ec2-user:ec2-user /home/ec2-user/dotnet-apps
-
-# Outras configurações ou scripts podem ser adicionados aqui
-
-dotnet tool update --global dotnet-ef

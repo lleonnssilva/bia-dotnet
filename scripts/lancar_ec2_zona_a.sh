@@ -10,5 +10,6 @@ fi
 aws ec2 run-instances --image-id ami-066784287e358dad1 --count 1 --instance-type t3.micro \
 --security-group-ids $security_group_id --subnet-id $subnet_id --associate-public-ip-address \
 --block-device-mappings '[{"DeviceName":"/dev/xvda","Ebs":{"VolumeSize":30,"VolumeType":"gp2"}}]' \
---tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=bia-dev}]' \
---iam-instance-profile Name=role-acesso-ssm --user-data file://user_data_ec2_zona_a.sh
+--tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=bastion-host}]' \
+--user-data file://user_data_ec2_zona_a.sh \
+--key-name chave_key_aws
