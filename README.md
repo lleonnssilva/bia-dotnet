@@ -43,16 +43,10 @@ docker compose up -d
 Acessar
 http://localhost:3001/
 
-### Migrations
+#### Migrations Create ####
 
-Rodar os migrations.
+docker exec -it id_container dotnet ef migrations add InitilCreate
 
-```bash
-dotnet ef migrations add InitialCreate
-dotnet ef database update
-```
-### Mais detalhes de migrations no arquivo Migrate.txt
-- Máquina local X EntityFramework Migrations da solução
-- Máquina local com RDS AWS X EntityFramework Migrations da solução
-- Máquina local com Docker X Command psql
-- RDS AWS com Bastion Host X EntityFramework Migrations da solução
+#### Migrations Update ####
+
+docker exec -it id_container dotnet ef database update
