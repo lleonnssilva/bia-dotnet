@@ -1,47 +1,18 @@
-﻿# Esse conteúdo faz parte da Formação AWS.
+﻿## Projeto base para o evento Bootcamp Imersão AWS que irei realizar.
 
-- Link para entrar para a Formação AWS: https://inscricao.formacaoaws.com.br
+### Período do evento: 05 a 11 de Agosto/2024 (Online e ao Vivo às 20h)
 
-- Canal do Youtube: https://www.youtube.com/@henryllemaia
+[>> Página de Inscrição do evento](https://org.imersaoaws.com.br/github/readme)
 
-### Siga as orientacoes para rodar o seu projeto com docker
+#### Adicionar as dependências VisualStudio ####
+.NET.Sdk 8.0
+Microsoft.EntityFrameworkCore
+Microsoft.EntityFrameworkCore.Design
+Npgsql.EntityFrameworkCore.PostgreSQL
 
-_Obs: Atente para a arquitetura da sua máquina, como é explicado na aula_ 
+#### Para criar o container ####
 
-
-# Bia Bootcamp Imersão AWS 
-
-Versão Adaptada de Node/React para .Net
-
-# Ferramentas e bibliotecas do projeto
-
-Segue algumas informações de quais ferramentas e importações você precisa ter 
-
-1. Visual Studio
-2. .NET Sdk 8.0
-3. Microsoft.EntityFrameworkCore.Design
-4. Npgsql.EntityFrameworkCore.PostgreSQL
-5. Microsoft.EntityFrameworkCore
-6. Docker
-7. Git
-
-
-## Setup
-
-Comando para clonar o repositório e começar a usar.
-
-```bash
-git clone https://github.com/lleonnssilva/bia-dotnet.git
-```
-
-
-
-Iniciar o projeto com docker
-```bash
-docker compose up -d
-```
-Acessar
-http://localhost:3001/
+docker-compose up -d
 
 #### Migrations Create ####
 
@@ -50,3 +21,4 @@ docker exec -it id_container dotnet ef migrations add InitilCreate
 #### Migrations Update ####
 
 docker exec -it id_container dotnet ef database update
+

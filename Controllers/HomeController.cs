@@ -2,6 +2,10 @@ using BIA.Models;
 using BIA.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Threading.Tasks;
+using System;
+using Microsoft.Extensions.Logging;
 
 
 namespace BIA.Controllers
@@ -10,18 +14,14 @@ namespace BIA.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IServiceApi _service;
-        private readonly IWebHostEnvironment _env;
-        public HomeController(ILogger<HomeController> logger, IServiceApi service, IWebHostEnvironment env)
+        public HomeController(ILogger<HomeController> logger, IServiceApi service)
         {
             _logger = logger;
             _service = service;
-            _env = env;
-
         }
 
         public IActionResult Index()
         {
-            ViewBag.Ambiente = _env.EnvironmentName;
             return View();
         }
 
@@ -100,6 +100,31 @@ namespace BIA.Controllers
             }
         }
 
+        [HttpPost]
+        public async Task<JsonResult> AlternarImportante(string id)
+        {
+            try
+            {
+                var _id = new Guid(id);
+                await _service.AlternarImportante(_id);
+                var response = new
+                {
+                    success = true,
+                    message = "Tarefa atualizada com sucesso!"
+                };
+                return Json(response);
+            }
+            catch (Exception ex)
+            {
+                var errorResponse = new
+                {
+                    success = false,
+                    message = ex?.InnerException?.Message,
+                    errors = ex?.InnerException?.Message
+                };
+                return Json(errorResponse);
+            }
+        }
         public IActionResult About()
         {
             return View();

@@ -1,35 +1,27 @@
-# .NET Core and .NET 5/6/7/8
-bin/
-obj/
+*.user
+*.aps
+*.pch
+*.vspscc
+*_i.c
+*_p.c
+*.ncb
+*.suo
+*.bak
+*.cache
+*.ilk
 *.log
-*.dmg
-*.pdb
-*.suo
-*.user
-*.userosscache
-*.sln.docstates
-
-# ASP.NET Scaffolding
-ScaffoldingReadMe.txt
-
-# Rider
-.idea/
-
-# Visual Studio
-.vscode/
+[Bb]in
+[Dd]ebug*/
+*.sbr
+obj/
+[Rr]elease*/
+_ReSharper*/
 .vs/
-*.csproj.user
-*.suo
-*.user
-*.userosscache
-*.sln.docstates
-
-# Windows
-Thumbs.db
-Desktop.ini
-
-# macOS
-.DS_Store
-
-# Linux
-*~
+obj/Debug/
+obj/Container/
+obj/*
+bin/*
+*/**/bin/Debug
+*/**/bin/Release
+*/**/obj/Debug
+*/**/obj/Release

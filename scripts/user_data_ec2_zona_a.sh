@@ -30,10 +30,3 @@ sudo echo "/swapfile swap swap defaults 0 0" >> /etc/fstab
 #Instalar node e npm
 curl -fsSL https://rpm.nodesource.com/setup_21.x | sudo bash -
 sudo yum install -y nodejs
-
-# Instalar o .NET SDK 8
-sudo yum install -y dotnet-sdk-8.0
-dotnet tool install --global dotnet-ef
-
-
-

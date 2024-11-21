@@ -12,4 +12,3 @@ EXPOSE 8080
 EXPOSE 443
 
 CMD ["dotnet", "out/Bia.dll"]
-
