@@ -1,4 +1,4 @@
-namespace BIA.Models
+namespace Bia.Models
 {
     public class ErrorViewModel
     {
