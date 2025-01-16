@@ -10,7 +10,7 @@ elif [ "$ambiente" = "dev" ]; then
     echo "Ambiente de desenvolvimento detectado."
     API_URL="http://bia-dev-elb.us-east-1.elasticbeanstalk.com"
     ./build.sh $API_URL
-    ./deploy-front.sh $API_URL $ambiente
+    #./deploy-front.sh $API_URL $ambiente
     eb deploy bia-dev --staged
 else
     echo "Ambiente inválido. Saindo..."
