@@ -13,7 +13,6 @@ var port = builder.Configuration["DB_PORT"];
 var db = builder.Configuration["DB"];
 
 string conectionstring =  String.Format("User ID={0};Password={1};Server={2};Port={3};Database={4}; Pooling=true;", user, password,host,port,db);
-Console.WriteLine($"*************conectionstring**************:\t{conectionstring}");
 builder.Services.AddDbContext<MeuDbContext>(options => options.UseNpgsql(conectionstring));
 // builder.Services.AddDbContext<MeuDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddTransient<IServiceApi, ServiceApi>();
