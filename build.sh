@@ -1,3 +1,6 @@
+source utils.sh
+BIA_API_URL=$1
+
 versao=$(git rev-parse HEAD | cut -c 1-7)
 aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 211125447912.dkr.ecr.us-east-1.amazonaws.com
 checar_ultimo_comando
