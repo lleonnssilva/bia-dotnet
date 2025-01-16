@@ -25,3 +25,7 @@ bin/*
 */**/bin/Release
 */**/obj/Debug
 */**/obj/Release
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

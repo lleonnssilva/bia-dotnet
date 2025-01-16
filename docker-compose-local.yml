@@ -2,7 +2,7 @@
 
 services:
   server:
-    container_name: bia
+    image: bia-local:latest
     ports:
       - 3001:8080
     links:
@@ -10,6 +10,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        BIA_API_URL: http://localhost:3001
     environment:
       - ASPNETCORE_URLS=http://+:8080
       - DB_USER=postgres

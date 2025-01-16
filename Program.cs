@@ -3,9 +3,11 @@ using BIA.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Configuration.AddEnvironmentVariables();
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Configuration.AddEnvironmentVariables();
 var user = builder.Configuration["DB_USER"];
 var password = builder.Configuration["DB_PWD"];
 var host = builder.Configuration["DB_HOST"];

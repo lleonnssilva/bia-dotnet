@@ -7,7 +7,7 @@ services:
       DB_PORT: 5432
       DB_PWD: fvXCEGk8I0JPRYBJcn2m
       DB_USER: postgres
-    image: 211125447912.dkr.ecr.us-east-1.amazonaws.com/bia:ad0d3bb
+    image: 211125447912.dkr.ecr.us-east-1.amazonaws.com/bia:389e485
     networks:
       default: null
     ports:

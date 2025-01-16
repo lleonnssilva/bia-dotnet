@@ -28,7 +28,8 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 COPY . .
-
+ARG BIA_API_URL
+RUN echo "Api da Bia:$BIA_API_URL"
 RUN dotnet tool install --global dotnet-ef
 ENV PATH="$PATH:/root/.dotnet/tools"
 

@@ -1,8 +1,12 @@
 version: "3"
 services:
-  server:
-    container_name: bia
-    image: 211125447912.dkr.ecr.us-east-1.amazonaws.com/bia:${TAG}
+  bia:
+    image: bia:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        BIA_API_URL: http://bia-dev-elb.us-east-1.elasticbeanstalk.com
     ports:
       - 80:8080
     environment:
