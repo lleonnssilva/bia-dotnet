@@ -1,0 +1,20 @@
+name: bia-dotnet
+services:
+  server:
+    environment:
+      DB: bia
+      DB_HOST: bia.cxq8wks8qvdp.us-east-1.rds.amazonaws.com
+      DB_PORT: 5432
+      DB_PWD: fvXCEGk8I0JPRYBJcn2m
+      DB_USER: postgres
+    image: 211125447912.dkr.ecr.us-east-1.amazonaws.com/bia:ad0d3bb
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 8080
+        published: "80"
+        protocol: tcp
+networks:
+  default:
+    name: bia-dotnet_default

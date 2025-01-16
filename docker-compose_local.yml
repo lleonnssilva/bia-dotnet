@@ -11,9 +11,12 @@ services:
       context: .
       dockerfile: Dockerfile
     environment:
-      # - ConnectionStrings__DefaultConnection=User ID=postgres;Password=postgres;Server=database;Port=5432;Database=bia; Pooling=true;
       - ASPNETCORE_URLS=http://+:8080
-
+      - DB_USER=postgres
+      - DB_PWD=postgres
+      - DB=bia
+      - DB_HOST=database
+      - DB_PORT=5432
   database:
      image: postgres:latest
      container_name: database
