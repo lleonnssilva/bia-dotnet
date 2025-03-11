@@ -40,9 +40,9 @@ jobs:
         docker push 676206946905.dkr.ecr.${{ secrets.AWS_REGION  }}.amazonaws.com/bia:latest
 
      # Atualiza o serviço ECS
-    - name: Update ECS service
-      run: |
-        aws ecs update-service --cluster ${{ secrets.ECS_CLUSTER }} --service ${{ secrets.ECS_SERVICE }} --force-new-deployment --task-definition ${{ secrets.ECS_TASK_DEFINITION  }} 
+    #- name: Update ECS service
+     # run: |
+      #  aws ecs update-service --cluster ${{ secrets.ECS_CLUSTER }} --service ${{ secrets.ECS_SERVICE }} --force-new-deployment --task-definition ${{ secrets.ECS_TASK_DEFINITION  }} 
     
     - name: Run migrations on ECS task 
       run: |
@@ -53,7 +53,6 @@ jobs:
         
         aws ecs execute-command \
         --cluster ${{ secrets.ECS_CLUSTER }} \
-        --task d365536d13074e5cbc88 \
         --container server \
         --command "dotnet ef database update" \
         --interactive
