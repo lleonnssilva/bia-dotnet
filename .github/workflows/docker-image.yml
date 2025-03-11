@@ -54,8 +54,8 @@ jobs:
         
         aws ecs execute-command \
         --cluster ${{ secrets.ECS_CLUSTER }} \
+         --task $TASK_ID \
         --container server \
-        --task $TASK_ID \
         --command "dotnet ef database update" \
         --interactive
   
