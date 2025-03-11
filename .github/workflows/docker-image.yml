@@ -38,4 +38,4 @@ jobs:
     # 6. Atualizar o ECS com a nova imagem (Deploy)
     - name: Deploy to ECS
       run: |
-        aws ecs update-service --cluster cluster-bia-ci_cd --service service-bia-ci-cd --force-new-deployment --region us-east-1
+        aws ecs update-service --cluster cluster-bia-ci_cd --service service-bia-ci-cd --force-new-deployment
