@@ -59,7 +59,7 @@ jobs:
 
     - name: Tag Docker image
       run: |
-        docker tag meu-dotnet-app:latest 676206946905.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/bia:latest
+        docker tag bia:latest 676206946905.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/bia:latest
 
     - name: Push Docker image
       run: |
