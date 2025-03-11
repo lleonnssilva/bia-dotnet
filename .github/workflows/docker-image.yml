@@ -1,25 +1,52 @@
-name: Docker Image CI
+name: Build and Deploy Docker image to AWS ECS
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
+
     steps:
-    # 1. Checar o código do repositório
-    - name: Checkout code
-      uses: actions/checkout@v2
-    
-    # 2. Setar Docker Buildx
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
-      
+    - name: Check out code
+      uses: actions/checkout@v3
+
+    - name: Set up .NET 8
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.x'
+
+    - name: Update and fix packages
+      run: |
+        sudo apt-get update
+        sudo apt-get upgrade -y
+        sudo apt-get dist-upgrade -y
+        sudo apt-get -f install
+
+    - name: Install Docker
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common
+        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+        sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+        sudo apt-get update
+        sudo apt-get install -y docker-ce
+
+    - name: Build .NET project
+      run: |
+        dotnet restore
+        dotnet build --configuration Release
+
+    - name: Publish .NET project
+      run: |
+        dotnet publish --configuration Release --output ./publish
+
+    - name: Build Docker image
+      run: |
+        docker build -t meu-dotnet-app:latest .
+        
     - name: Configure AWS CLI
       run: |
         aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -29,12 +56,11 @@ jobs:
     - name: Log in to AWS ECR
       run: |
         aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin 676206946905.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
-    
-    # 4. Build da imagem Docker
-    - name: Build Docker image
+
+    - name: Tag Docker image
       run: |
-        docker build -t 676206946905.dkr.ecr.us-east-1.amazonaws.com/bia:latest .
-    
+        docker tag meu-dotnet-app:latest 676206946905.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/bia:latest
+
     - name: Push Docker image
       run: |
         docker push 676206946905.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/bia:latest
