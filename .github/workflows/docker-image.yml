@@ -57,5 +57,4 @@ jobs:
         --container bia \
         --command "dotnet ef database update" \
         --interactive
-        
   
