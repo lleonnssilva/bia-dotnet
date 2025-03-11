@@ -25,7 +25,7 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build -t myapp .
+        docker build -t bia .
         docker tag bia:latest 676206946905.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/bia:latest
 
     - name: Push Docker image to Amazon ECR
