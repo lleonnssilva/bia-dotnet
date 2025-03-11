@@ -35,13 +35,15 @@ jobs:
       run: |
         docker build -t 676206946905.dkr.ecr.us-east-1.amazonaws.com/bia:latest .
     
-    # 5. Fazer Push para o ECR
-    - name: Push to ECR
+    - name: Push Docker image
       run: |
-        docker tag 676206946905.dkr.ecr.us-east-1.amazonaws.com/bia:latest 676206946905.dkr.ecr.east-1.amazonaws.com/676206946905.dkr.ecr.us-east-1.amazonaws.com/bia:latest
-        docker push 676206946905.dkr.ecr.us-east-1.amazonaws.com/676206946905.dkr.ecr.us-east-1.amazonaws.com/bia:latest
-    
-    # 6. Atualizar o ECS com a nova imagem (Deploy)
+        docker push 676206946905.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/bia:latest
+
     - name: Deploy to ECS
-      run: |
-        aws ecs update-service --cluster cluster-bia-ci_cd --service service-bia-ci-cd --force-new-deployment
+      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      with:
+        task-definition: ${{ secrets.ECS_TASK_DEFINITION }}
+        service: ${{ secrets.ECS_SERVICE }}
+        cluster: ${{ secrets.ECS_CLUSTER }}
+        image: 676206946905.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/bia:latest
+        region: ${{ secrets.AWS_REGION }}
