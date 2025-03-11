@@ -57,5 +57,4 @@ jobs:
         --command "dotnet ef database update" \
         --interactive
 
-
   
