@@ -46,6 +46,7 @@ jobs:
     
     - name: Run migrations on ECS task 
       run: |
+        TASK_ID=$(aws ecs list-tasks --cluster ${{ secrets.ECS_CLUSTER }} --desired-status RUNNING --query 'taskArns[0]' --output text)
         aws ecs update-service \
         --cluster ${{ secrets.ECS_CLUSTER }} \
         --service ${{ secrets.ECS_SERVICE }} \
@@ -54,6 +55,7 @@ jobs:
         aws ecs execute-command \
         --cluster ${{ secrets.ECS_CLUSTER }} \
         --container server \
+        --task $TASK_ID \
         --command "dotnet ef database update" \
         --interactive
   
