@@ -35,15 +35,13 @@ jobs:
         docker build -t bia .
         docker tag bia:latest 676206946905.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/bia:latest
 
-      # Passo 5: Subir o container Docker (se não estiver rodando)
-    - name: Run Docker container
+    - name: Run migrations
       run: |
-          docker run -d --name server bia
-
-      # Passo 6: Rodar migrações do banco de dados
-    - name: Run Database Migrations
-      run: |
-          docker exec server dotnet ef migrations add InitialCreate
+        docker run -e DB_HOST=${{ secrets.DB_HOST }} \
+                   -e DB_USERNAME=${{ secrets.DB_USERNAME }} \
+                   -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
+                   -e DB_NAME=${{ secrets.DB_NAME }} \
+                   your-docker-image dotnet ef database update
           docker exec server dotnet ef database update
           
     - name: Push Docker image to Amazon ECR
