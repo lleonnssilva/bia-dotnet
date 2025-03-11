@@ -24,14 +24,14 @@
 #WORKDIR /app
 #COPY --from=publish /app/publish .
 #ENTRYPOINT ["dotnet", "Bia.dll"]
-
+RUN apt-get update && apt-get install -y amazon-ssm-agent
+RUN systemctl enable amazon-ssm-agent && systemctl start amazon-ssm-agent
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 COPY . .
 
 RUN dotnet tool install --global dotnet-ef
-RUN apt-get update && apt-get install -y amazon-ssm-agent
-RUN systemctl enable amazon-ssm-agent && systemctl start amazon-ssm-agent
+
 ENV PATH="$PATH:/root/.dotnet/tools"
 
 RUN dotnet restore
