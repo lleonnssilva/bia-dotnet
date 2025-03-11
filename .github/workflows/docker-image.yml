@@ -34,14 +34,6 @@ jobs:
       run: |
         docker build -t bia .
         docker tag bia:latest 676206946905.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/bia:latest
-
-    - name: Run database migrations (Optional)
-      run: |
-        docker run -e DB_HOST=bia.clycgy8gm2ir.us-east-1.rds.amazonaws.com \
-                   -e DB_USERNAME=postgres \
-                   -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
-                   -e DB_NAME=bia \
-                   676206946905.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/bia:${{ github.sha }} dotnet ef database update
           
     - name: Push Docker image to Amazon ECR
       run: |
@@ -51,5 +43,19 @@ jobs:
     - name: Update ECS service
       run: |
         aws ecs update-service --cluster ${{ secrets.ECS_CLUSTER }} --service ${{ secrets.ECS_SERVICE }} --force-new-deployment --task-definition ${{ secrets.ECS_TASK_DEFINITION  }} 
-   
+    
+    - name: Run migrations on ECS task
+      run: |
+        aws ecs update-service \
+        --cluster ${{ secrets.ECS_CLUSTER }} \
+        --service ${{ secrets.ECS_SERVICE }} \
+        --force-new-deployment
+        aws ecs execute-command \
+        --cluster ${{ secrets.ECS_CLUSTER }} \
+        --task ${{ secrets.ECS_TASK_DEFINITION  }}  \
+        --container server \
+        --command "dotnet ef database update" \
+        --interactive
+
+
   
