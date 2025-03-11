@@ -30,13 +30,12 @@ WORKDIR /app
 COPY . .
 
 RUN dotnet tool install --global dotnet-ef
+RUN apt-get update && apt-get install -y amazon-ssm-agent
+RUN systemctl enable amazon-ssm-agent && systemctl start amazon-ssm-agent
 ENV PATH="$PATH:/root/.dotnet/tools"
 
 RUN dotnet restore
 RUN dotnet build -c Release -o out
-
-RUN apt-get update && apt-get install -y amazon-ssm-agent
-RUN systemctl enable amazon-ssm-agent && systemctl start amazon-ssm-agent
 
 EXPOSE 8080
 EXPOSE 443
