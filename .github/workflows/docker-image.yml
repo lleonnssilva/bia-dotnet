@@ -37,11 +37,11 @@ jobs:
 
     - name: Run migrations
       run: |
-        docker run -e DB_HOST=${{ secrets.DB_HOST }} \
-                   -e DB_USERNAME=${{ secrets.DB_USERNAME }} \
+        docker run -e DB_HOST=bia.clycgy8gm2ir.us-east-1.rds.amazonaws.com \
+                   -e DB_USERNAME=postgres \
                    -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
-                   -e DB_NAME=${{ secrets.DB_NAME }} \
-                   your-docker-image dotnet ef database update
+                   -e DB_NAME=bia \
+                   bia dotnet ef database update
           docker exec server dotnet ef database update
           
     - name: Push Docker image to Amazon ECR
