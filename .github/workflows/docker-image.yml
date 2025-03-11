@@ -35,14 +35,13 @@ jobs:
         docker build -t bia .
         docker tag bia:latest 676206946905.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/bia:latest
 
-    - name: Run migrations
+    - name: Run database migrations (Optional)
       run: |
         docker run -e DB_HOST=bia.clycgy8gm2ir.us-east-1.rds.amazonaws.com \
                    -e DB_USERNAME=postgres \
                    -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
                    -e DB_NAME=bia \
-                   bia dotnet ef database update
-          docker exec server dotnet ef database update
+                   676206946905.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/bia:${{ github.sha }} dotnet ef database update
           
     - name: Push Docker image to Amazon ECR
       run: |
