@@ -56,7 +56,6 @@ jobs:
         --cluster ${{ secrets.ECS_CLUSTER }} \
          --task $TASK_ID \
         --container bia \
-        --command "dotnet ef database update" \
-        --interactive
+        --command "dotnet ef database update"
         
   
