@@ -38,3 +38,11 @@ jobs:
     - name: Push Docker image to Amazon ECR
       run: |
         docker push 676206946905.dkr.ecr.${{ secrets.AWS_REGION  }}.amazonaws.com/bia:latest
+    - name: Deploy to ECS
+      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      with:
+        task-definition: ${{ secrets.ECS_TASK_DEFINITION }}
+        service: ${{ secrets.ECS_SERVICE }}
+        cluster: ${{ secrets.ECS_CLUSTER }}
+        image: 211125447912.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/meu-dotnet-app:latest
+        region: ${{ secrets.AWS_REGION }}    
