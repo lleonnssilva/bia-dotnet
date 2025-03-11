@@ -52,7 +52,7 @@ jobs:
         --force-new-deployment
         aws ecs execute-command \
         --cluster ${{ secrets.ECS_CLUSTER }} \
-        --task ${{ secrets.ECS_TASK_DEFINITION  }}  \
+        --task d365536d13074e5cbc88  \
         --container server \
         --command "dotnet ef database update" \
         --interactive
